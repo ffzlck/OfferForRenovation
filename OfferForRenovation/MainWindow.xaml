@@ -1,0 +1,64 @@
+﻿<Window x:Class="OfferForRenovation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OfferForRenovation"
+        xmlns:wrk="clr-namespace:OfferForRenovation.ViewModels"
+        mc:Ignorable="d"
+        Title="Renovation" Height="450" Width="800"
+        Closing="Window_Closing">
+    <Window.DataContext>
+        <wrk:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="lb_main" Grid.Column="0" HorizontalAlignment="Stretch" ItemsSource="{Binding AvailableWork}" SelectedItem="{Binding SelectedFromAvaialbleWork}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <Label Content="{Binding Name}" FontSize="14" FontWeight="Bold" />
+                            <Label Content="{Binding TypePrice}" ContentStringFormat="Type price: {0}" Grid.Row="1" />
+                            <Label Content="{Binding Price}" ContentStringFormat="Price: {0}" Grid.Row="1" Grid.Column="1" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Column="1">
+            <Button Content="Buy" Padding="10" Margin="10" Command="{Binding AddToBoughtWork}"/>
+            <Button Content="Load works" Padding="10" Margin="10" Command="{Binding LoadSavedWork}"/>
+            <Button Content="Add to availabel work" Padding="10" Margin="10" Command="{Binding AddToAvailableWork}"/>
+            <Button Content="Edit available work" Padding="10" Margin="10" Command="{Binding EditAvaialbleWork}"/>
+            <Button Content="Delete work" Padding="10" Margin="10" Command="{Binding DeleteWork}"/>
+            <Label Content="{Binding AllCost}" HorizontalAlignment="Center" ContentStringFormat="Cost: {0}$"/>
+        </StackPanel>
+        <ListBox x:Name="lb_bought" Grid.Column="2" ItemsSource="{Binding BoughtWork}" SelectedItem="{Binding SelectedFromBoughtWork}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{Binding Name}" />
+                        <Label Content="{Binding Amount}" ContentStringFormat=" {0}" />
+                        <Label Content="{Binding TypePrice}"/>
+                        <Label Content="{Binding ActualPrice}" ContentStringFormat=" {0} HUF" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+    </Grid>
+</Window>
